@@ -19,6 +19,14 @@ POEM = (
 )
 
 
+# Gate guard: the sealed scorer only accepts 1-280 Unicode code points
+# of non-whitespace UTF-8 text. Fail loudly here rather than shipping
+# an invalid entry.
+assert 1 <= len(POEM) <= 280 and POEM.strip(), (
+    "poem outside the 1-280 character gate"
+)
+
+
 def main() -> None:
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
